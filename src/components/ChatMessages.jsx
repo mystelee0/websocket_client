@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import testMessages from "../testMessage"; //테스트 후 삭제
+import testMessages from "../data/testMessage"; //테스트 후 삭제
 import { useSelector } from "react-redux"
 function ChatMessages() {
 

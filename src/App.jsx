@@ -11,14 +11,18 @@ import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
 import { add } from './redux/chatSlice'
 import { setUserId } from './redux/userIdSlice';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import FriendsList from './components/FriendsList';
+import { BrowserRouter, Link, Route, Routes } from 'react-router-dom';
+
+import Friends from './components/Friends';
+import MainLayout from './components/MainLayout';
+import ChatRooms from './components/ChatRooms';
+
 function App() {
 
 
   let [client, setClient] = useState();
   let dispatch = useDispatch();
-const [menuOpen,setMenuOpen] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
   //메세지 수신
   const messageCallback = function (message) {
     console.log("메세지 콜백 실행");
@@ -57,24 +61,28 @@ const [menuOpen,setMenuOpen] = useState(false);
 
   return (
     <>
-    <StyledContainer onClick={()=>setMenuOpen(false)}>
-    <BrowserRouter>
-      <Routes>
-        <Route path='/' element={<FriendsList/>}/>
-        <Route path='/chatroom' element={
-          <>
-<ChatHeader menuOpen={menuOpen} setMenuOpen={setMenuOpen}/>
-        <BodyArea>
-          <ChatMessages />
-          <SideMenu menuOpen={menuOpen}/>
-        </BodyArea>
-        <ChatInput client={client} />
-          </>
-        }/>
-      </Routes>
-    </BrowserRouter>
-      
-        
+      <StyledContainer onClick={() => setMenuOpen(false)}>
+        <BrowserRouter>
+          <Routes>
+            <Route element={<MainLayout/>}>
+              <Route path='/' element={<Friends />} />
+              <Route path='/chats' element={<ChatRooms/>} />
+            </Route>
+            
+            <Route path='/chats/101' element={
+              <>
+                <ChatHeader menuOpen={menuOpen} setMenuOpen={setMenuOpen} />
+                <BodyArea>
+                  <ChatMessages />
+                  <SideMenu menuOpen={menuOpen} />
+                </BodyArea>
+                <ChatInput client={client} />
+              </>
+            } />
+          </Routes>
+
+        </BrowserRouter>
+
       </StyledContainer>
     </>
   )
@@ -92,6 +100,7 @@ const StyledContainer = styled.div`
   margin: 0 auto;
   border: 1px solid #ccc;
   font-family: 'Arial', sans-serif;
+  background:#fff;
 `;
 const BodyArea = styled.div`
   flex: 1;
