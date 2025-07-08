@@ -1,19 +1,35 @@
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
-function FriendItem({friend,type}){
-
-    return(
-        <FriendContainer>
-            
-      <ProfileImage src={friend.profileImage} alt={friend.name} />
+function FriendItem({ friend, type }) {
+  const navigate = useNavigate();
+  return (
+    <FriendContainer onClick={()=>navigate(`/chats/${friend.id}`)}>
+      {
+        type !== "chat" || friend.count === 1 ? <ProfileImage src={friend.profileImage} alt={friend.name || friend.roomName} /> :
+          <AvatarGroup>
+            <AvatarImage
+              src={"/profile.jpg"}
+              style={{ bottom: "2px", left: "2px" }}
+            />
+            <AvatarImage
+              src={"/profile.jpg"}
+              style={{ bottom: "2px", right: "2px" }}
+            />
+            <AvatarImage
+              src={"/profile.jpg"}
+              style={{ top: "2px", left: "50%", transform: "translateX(-50%)" }}
+            />
+          </AvatarGroup>
+      }
       <FriendInfo>
-        <FriendName>{friend.name}</FriendName>
+        <FriendName>{friend.name || friend.roomName}</FriendName>
         {friend.statusMessage && (
           <StatusMessage>{friend.statusMessage}</StatusMessage>
         )}
       </FriendInfo>
     </FriendContainer>
-    )
+  )
 }
 
 const FriendContainer = styled.div`
@@ -49,4 +65,22 @@ const StatusMessage = styled.div`
   text-align:left;
 `;
 
+const AvatarGroup = styled.div`
+  width: 48px;
+  height: 48px;
+  background: #f0f0f0;
+  border-radius: 10px;
+  position: relative;
+  overflow: hidden;
+  margin-right:12px;
+`;
+
+const AvatarImage = styled.img`
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  object-fit: cover;
+  position: absolute;
+  border: 1px solid white;
+`;
 export default FriendItem;

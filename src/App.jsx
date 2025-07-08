@@ -10,12 +10,14 @@ import SideMenu from './components/SideMenu';
 import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
 import { add } from './redux/chatSlice'
-import { setUserId } from './redux/userIdSlice';
+import { setUserInfo } from './redux/userInfoSlice';
 import { BrowserRouter, Link, Route, Routes } from 'react-router-dom';
 
 import Friends from './components/Friends';
 import MainLayout from './components/MainLayout';
 import ChatRooms from './components/ChatRooms';
+import Login from './components/Login';
+import SignUp from './components/SignUp';
 
 function App() {
 
@@ -38,7 +40,7 @@ function App() {
   //웹소켓 연결
   useEffect(() => {
     let userIdCopy = window.prompt("닉네임을 입력하세요");
-    dispatch(setUserId(userIdCopy));
+    dispatch(setUserInfo(userIdCopy));
 
     const client = new Client({
       brokerURL: `ws://192.168.106.80:8080/websocket-server?userId=${userIdCopy}`,
@@ -79,7 +81,11 @@ function App() {
                 <ChatInput client={client} />
               </>
             } />
+
+            <Route path="/login" element={<Login/>}/>
+            <Route path="/signup" element={<SignUp/>}/>
           </Routes>
+          
 
         </BrowserRouter>
 

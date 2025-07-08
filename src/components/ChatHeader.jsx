@@ -16,7 +16,7 @@ function ChatHeader({menuOpen,setMenuOpen}) {
   return (
     <>
     <Header>
-      <BackButton onClick={()=>navigate("/")}>←</BackButton>
+      <BackButton onClick={()=>navigate("/chats")}>←</BackButton>
       <Title>채팅방</Title>
       <Hamburger onClick={(e)=>toggleMenu(e)}>☰</Hamburger>
     </Header>
