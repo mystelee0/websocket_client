@@ -10,7 +10,7 @@ function ChatRooms() {
         <ChatRoomsWrapper>
             {
                 chatRoomsItem.map((roomInfo) =>
-                    <FriendItem key={roomInfo.id}  type="chat" friend={roomInfo}></FriendItem>
+                    <FriendItem type={roomInfo.count} key={roomInfo.id} friend={roomInfo}></FriendItem>
                 )
             }
         </ChatRoomsWrapper>

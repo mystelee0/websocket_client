@@ -1,32 +1,17 @@
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import ShowProfileImage from "./ShowProfileImage";
 
 function FriendItem({ friend, type }) {
   const navigate = useNavigate();
   return (
     <FriendContainer onClick={()=>navigate(`/chats/${friend.id}`)}>
-      {
-        type !== "chat" || friend.count === 1 ? <ProfileImage src={friend.profileImage} alt={friend.name || friend.roomName} /> :
-          <AvatarGroup>
-            <AvatarImage
-              src={"/profile.jpg"}
-              style={{ bottom: "2px", left: "2px" }}
-            />
-            <AvatarImage
-              src={"/profile.jpg"}
-              style={{ bottom: "2px", right: "2px" }}
-            />
-            <AvatarImage
-              src={"/profile.jpg"}
-              style={{ top: "2px", left: "50%", transform: "translateX(-50%)" }}
-            />
-          </AvatarGroup>
-      }
+      <ShowProfileImage type={type} item={friend}/>
       <FriendInfo>
         <FriendName>{friend.name || friend.roomName}</FriendName>
-        {friend.statusMessage && (
+
           <StatusMessage>{friend.statusMessage}</StatusMessage>
-        )}
+        
       </FriendInfo>
     </FriendContainer>
   )

@@ -11,9 +11,9 @@ function Friends() {
     
     return (
         <ListContainer>
-            <FriendItem friend={{ name: userInfo.nickName, statusMessage: "안녕!" ,profileImage:"/profile.jpg"}}/>
+            <FriendItem type={1} friend={{ name: userInfo.nickName, statusMessage: "안녕!" ,profileImage:"/profile.jpg"}}/>
             {friends.map((friend) =>
-                <FriendItem key={friend.id} friend={friend} />
+                <FriendItem type={1} key={friend.id} friend={friend} />
             )}
         </ListContainer>
 
