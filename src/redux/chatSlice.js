@@ -14,7 +14,7 @@ export const chatSlice=createSlice({
     name:'chat',
     initialState,
     reducers:{
-        add:(state,action)=>{
+        addMessage:(state,action)=>{
             let msg = JSON.parse(action.payload);
             let pid=msg.roomId;
             let idx=state.findIndex(room=>room.roomId===pid)
@@ -29,6 +29,6 @@ export const chatSlice=createSlice({
     }
 })
 
-export const {add}=chatSlice.actions;
+export const {addMessage}=chatSlice.actions;
 
 export default chatSlice.reducer;

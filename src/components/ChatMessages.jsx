@@ -4,16 +4,20 @@ import { useSelector } from "react-redux"
 function ChatMessages() {
 
     let messages = useSelector((state) => state.chat.find(ob => ob.roomId === parseInt(101)))
-    let userId = useSelector((state) => state.userId);
+    let userInfo = useSelector((state) => state.userInfo);
 
     function renderSwitch(msg,index) {
         //스위치 시스템추가
         switch (msg.messageType) {
             case 1:
-                return msg.sender === userId ? 
+                return msg.sender.mobNum === userInfo.mobNum ? 
                         <MyMessage key={index}>{msg.message}</MyMessage>
                      : 
-                        <OtherMessage key={index}>{msg.message}</OtherMessage>
+                     <>
+                     <div style={{textAlign:"left", color:"black"}}>{msg.sender.nickName}</div>
+                     <OtherMessage key={index}>{msg.message}</OtherMessage>
+                     </>
+                        
             case 2:
                 return <SystemMessage key={index}>{`System : ${msg.message}`}</SystemMessage>;
         }

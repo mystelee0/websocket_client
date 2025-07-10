@@ -1,5 +1,6 @@
 import { Link, Outlet, useLocation } from "react-router-dom";
 import styled from "styled-components";
+import { useCheckUser } from "../useSetUser";
 
 function MainLayout() {
 
@@ -9,7 +10,7 @@ function MainLayout() {
         if(location.pathname==="/") return "친구";
         else return "채팅";
     }
-
+    useCheckUser();
     return (
         <>
             <PageTitle >{getTitle()}</PageTitle>

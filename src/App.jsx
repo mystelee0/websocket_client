@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import './App.css'
-import { Client } from '@stomp/stompjs';
+
 
 import ChatHeader from './components/ChatHeader';
 import ChatMessages from './components/ChatMessages';
@@ -8,9 +8,6 @@ import ChatInput from './components/ChatInput';
 import SideMenu from './components/SideMenu';
 
 import styled from 'styled-components';
-import { useDispatch, useSelector } from 'react-redux';
-import { add } from './redux/chatSlice'
-import { setUserInfo } from './redux/userInfoSlice';
 import { BrowserRouter, Link, Route, Routes } from 'react-router-dom';
 
 import Friends from './components/Friends';
@@ -18,47 +15,18 @@ import MainLayout from './components/MainLayout';
 import ChatRooms from './components/ChatRooms';
 import Login from './components/Login';
 import SignUp from './components/SignUp';
+import { useCheckUser } from './useSetUser';
+import { useWebsocket } from './useWebsocket';
 
 function App() {
-
-
-  let [client, setClient] = useState();
-  let dispatch = useDispatch();
+  
   const [menuOpen, setMenuOpen] = useState(false);
-  //메세지 수신
-  const messageCallback = function (message) {
-    console.log("메세지 콜백 실행");
-    // called when the client receives a STOMP message from the server
-    if (message.body) {
-      console.log("받은메시지", message);
-      dispatch(add(message.body));
-    } else {
-      alert("error");
-    }
-  }
+
   let subscribeId;
-  //웹소켓 연결
-  useEffect(() => {
-    let userIdCopy = window.prompt("닉네임을 입력하세요");
-    dispatch(setUserInfo(userIdCopy));
 
-    const client = new Client({
-      brokerURL: `ws://192.168.106.80:8080/websocket-server?userId=${userIdCopy}`,
-      onConnect: () => {
-        subscribeId = client.subscribe(`/user/${userIdCopy}/queue/message`, messageCallback);
-        client.subscribe(`/topic/101`, messageCallback);
-        console.log(subscribeId);
-      },
-      // 디버그 로그 출력
-      debug: function (str) {
-        console.log(str);
-      },
-    });
-    //state에 저장
-    setClient(client);
-
-    client.activate();
-  }, []);
+  //사용자정보 리덕스에 저장
+  
+  let [client] = useWebsocket();
 
 
   return (
@@ -66,11 +34,12 @@ function App() {
       <StyledContainer onClick={() => setMenuOpen(false)}>
         <BrowserRouter>
           <Routes>
-            <Route element={<MainLayout/>}>
+
+            <Route element={<MainLayout />}>
               <Route path='/' element={<Friends />} />
-              <Route path='/chats' element={<ChatRooms/>} />
+              <Route path='/chats' element={<ChatRooms />} />
             </Route>
-            
+
             <Route path='/chats/101' element={
               <>
                 <ChatHeader menuOpen={menuOpen} setMenuOpen={setMenuOpen} />
@@ -82,10 +51,10 @@ function App() {
               </>
             } />
 
-            <Route path="/login" element={<Login/>}/>
-            <Route path="/signup" element={<SignUp/>}/>
+            <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<SignUp />} />
           </Routes>
-          
+
 
         </BrowserRouter>
 

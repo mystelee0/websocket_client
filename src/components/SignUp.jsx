@@ -29,9 +29,9 @@ function SignUp() {
       <LoginBox>
         <Logo src="/jjanggu.jpeg" alt="Logo" />
         <Title>채팅하자 회원가입</Title>
-        <Input placeholder="전화번호" name="mobNum"onChange={handleChange}></Input>
-        <Input placeholder="별명" name="nickName"></Input>
-        <Input placeholder="비밀번호" name="password"></Input>
+        <Input placeholder="전화번호" name="mobNum" onChange={handleChange}></Input>
+        <Input placeholder="별명" name="nickName" onChange={handleChange}></Input>
+        <Input placeholder="비밀번호" name="password" onChange={handleChange}></Input>
         <LoginButton onClick={handleSignUp}>
           가입하기
         </LoginButton>

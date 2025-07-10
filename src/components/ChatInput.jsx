@@ -5,8 +5,8 @@ import styled from "styled-components";
 function ChatInput({client}) {
 
   let [input,setInput] = useState("");
-  let userId = useSelector((state)=>state.userId);
-  console.log("입력하는곳 유저아이디",userId);
+  let userInfo = useSelector((state)=>state.userInfo);
+  console.log("입력하는곳 유저아이디",userInfo);
   const inputRef = useRef();
 
   const sendMessage = ()=>{
@@ -19,7 +19,7 @@ function ChatInput({client}) {
             let body = {
                 'messageType':1, //1=토픽(broadcast) 2=유저(queue) 시스템
                 'roomId': 101,
-                'sender': userId,
+                'sender': userInfo,
                 'message': input,
             }
             //메시지 보내기

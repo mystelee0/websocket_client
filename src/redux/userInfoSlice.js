@@ -1,6 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialState="none"
+const initialState={
+    mobNum:"",
+    nickName:"",
+}
 
 
 export const userInfoSlice=createSlice({

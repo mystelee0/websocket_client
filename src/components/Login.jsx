@@ -1,25 +1,50 @@
+import axios from "axios";
+import { useState } from "react";
+import { useDispatch } from "react-redux";
 import styled from "styled-components";
+import { setUserInfo } from "../redux/userInfoSlice";
+import { useNavigate } from "react-router-dom";
 
 function Login() {
-    
-  const handleLogin = () => {
-    alert("로그인 로직 연결 예정");
-  };
 
-  return (
-    <Container>
-      <LoginBox>
-        <Logo src="/jjanggu.jpeg" alt="Kakao Logo" />
-        <Title>채팅하자 로그인</Title>
-        <Input placeholder="전화번호"></Input>
-        <Input placeholder="비밀번호"></Input>
-        <LoginButton onClick={handleLogin}>
-          로그인
-        </LoginButton>
-        <InfoText>계정이 없으신가요? <a href="/signup">회원가입</a></InfoText>
-      </LoginBox>
-    </Container>
-  );
+    let [loginData, setLoginData] = useState({
+        mobNum: "",
+        password: ""
+    });
+
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+    const handleChange = (e) => {
+        setLoginData({
+            ...loginData,
+            [e.target.name]: e.target.value
+        })
+    };
+
+    function handleLogin(){
+        axios.post("http://192.168.106.80:8080/auth/login",loginData,{withCredentials:true})
+        .then((res)=>{
+            console.log("로그인 결과값 ",res.data);
+            dispatch(setUserInfo(res.data));     
+            navigate("/");
+        })
+        .catch((err)=>alert("로그인 실패",err));
+    }
+
+    return (
+        <Container>
+            <LoginBox>
+                <Logo src="/jjanggu.jpeg" alt="Kakao Logo" />
+                <Title>채팅하자 로그인</Title>
+                <Input placeholder="전화번호" name="mobNum" onChange={handleChange}></Input>
+                <Input placeholder="비밀번호" name="password" onChange={handleChange}></Input>
+                <LoginButton onClick={handleLogin}>
+                    로그인
+                </LoginButton>
+                <InfoText>계정이 없으신가요? <a href="/signup">회원가입</a></InfoText>
+            </LoginBox>
+        </Container>
+    );
 }
 
 const Container = styled.div`
