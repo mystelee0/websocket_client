@@ -1,20 +1,20 @@
 const friends = [
   {
-    id: 1,
+    mobNum: 1,
     name: "짱구",
-    statusMessage: "오늘도 화이팅!",
+    message: "오늘도 화이팅!",
     profileImage: "/profile.jpg",
   },
   {
-    id: 2,
+    mobNum: 2,
     name: "철수",
-    statusMessage: "음악은 내 삶의 전부 🎶",
+    message: "음악은 내 삶의 전부 🎶",
     profileImage: "/profile.jpg",
   },
   {
-    id: 3,
+    mobNum: 3,
     name: "훈이",
-    statusMessage: "",
+    message: "",
     profileImage: "/profile.jpg",
   },
 ];

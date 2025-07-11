@@ -1,31 +1,53 @@
 import styled from "styled-components";
 
-function ShowProfileImage({ type, item }) {
-    console.log(item.profileImage);
+function ShowProfileImage({ type, contents }) {
+    console.log("showprofileimage", contents.profileImage);
+
+    //서버에 프로필 이미지 요청
+    function getProfileImages() {
+        if (type === 1) {
+            axios.get(`/users/${contents.mobNum||contents.sender.mobNum}/profileUrl`)
+                .then((res) => {
+                    console.log("프로필url", res);
+                    srcUrl = res.data;
+                })
+        }else{
+            axios.get(`/users/${contents.sender.mobNum}/profileUrl`)
+                .then((res) => {
+                    console.log("프로필url", res);
+                    srcUrl = res.data;
+                })
+        }
+
+    }
+    //이미지 경로, 이미지 없으면 기본 이미지로 지정됨
+    let srcUrl;
+    srcUrl = srcUrl || "/profile.jpg";
+
     function renderImage() {
         switch (type) {
             case 1:
                 return (
-                    <ProfileImage src={item.profileImage || "/profile.jpg"} alt={item.name} />
+                    <ProfileImage src={srcUrl} alt="profile image" />
                 )
             case 3:
                 return (
                     <AvatarGroup>
                         <AvatarImage
-                            src={"/profile.jpg"}
+                            src={srcUrl}
                             style={{ bottom: "2px", left: "2px" }}
                         />
                         <AvatarImage
-                            src={"/profile.jpg"}
+                            src={srcUrl}
                             style={{ bottom: "2px", right: "2px" }}
                         />
                         <AvatarImage
-                            src={"/profile.jpg"}
+                            src={srcUrl}
                             style={{ top: "2px", left: "50%", transform: "translateX(-50%)" }}
                         />
                     </AvatarGroup>
                 )
-            
+
         }
     }
     return (

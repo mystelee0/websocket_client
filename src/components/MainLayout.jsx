@@ -18,6 +18,7 @@ function MainLayout() {
             <div>
                 <Link to="/">친구</Link>
                 <Link to="/chats">채팅</Link>
+                <Link to={"/login"}>로그인</Link>
             </div>
         </>
     )

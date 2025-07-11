@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import chatRoomsItem from "../data/chatRooms";
-import FriendItem from "./FriendItem";
+import ListItem from "./ListItem";
 import { useNavigate } from "react-router-dom";
 
 function ChatRooms() {
@@ -10,7 +10,7 @@ function ChatRooms() {
         <ChatRoomsWrapper>
             {
                 chatRoomsItem.map((roomInfo) =>
-                    <FriendItem type={roomInfo.count} key={roomInfo.id} friend={roomInfo}></FriendItem>
+                    <ListItem type={roomInfo.count} key={roomInfo.id} contents={roomInfo}/> 
                 )
             }
         </ChatRoomsWrapper>
