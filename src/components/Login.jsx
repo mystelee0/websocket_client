@@ -5,6 +5,8 @@ import styled from "styled-components";
 import { setUserInfo } from "../redux/userInfoSlice";
 import { useNavigate } from "react-router-dom";
 
+const SERVER_IP = import.meta.env.VITE_SERVER_IP;
+
 function Login() {
 
     let [loginData, setLoginData] = useState({
@@ -22,7 +24,7 @@ function Login() {
     };
 
     function handleLogin(){
-        axios.post("http://192.168.106.80:8080/auth/login",loginData,{withCredentials:true})
+        axios.post(`${SERVER_IP}/auth/login`,loginData,{withCredentials:true})
         .then((res)=>{
             console.log("로그인 결과값 ",res.data);
             dispatch(setUserInfo(res.data));     

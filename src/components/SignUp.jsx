@@ -2,6 +2,8 @@ import axios from "axios";
 import { useState } from "react";
 import styled from "styled-components";
 
+const SERVER_IP = import.meta.env.VITE_SERVER_IP;
+
 function SignUp() {
 
     let [newUser,setNewUser]=useState({
@@ -16,7 +18,7 @@ function SignUp() {
         })
     }
   function handleSignUp(){
-    axios.post("http://localhost:8080/users",newUser)
+    axios.post(`${SERVER_IP}/users`,newUser)
     .then((res)=>{
         console.log(res);
     }).catch((err)=>{
