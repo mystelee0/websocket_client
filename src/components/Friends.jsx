@@ -7,11 +7,11 @@ import { useCheckUser } from "../useSetUser";
 function Friends() {
 
     const userInfo = useSelector((state)=>state.userInfo);
-    console.log("친구목록 유저인포",userInfo);
+
     
     return (
         <ListContainer>
-            <ListItem type={1} contents={{ name: userInfo.nickName, statusMessage: "안녕!" ,profileImage:"/profile.jpg"}}/>
+            <ListItem type={1} contents={userInfo}/>
             {friends.map((friend) =>
                 <ListItem type={1} key={friend.mobNum} contents={friend} />
             )}

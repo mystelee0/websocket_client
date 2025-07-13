@@ -2,13 +2,16 @@ import styled from "styled-components";
 import { useSelector } from "react-redux"
 import ShowProfileImage from "./ShowProfileImage";
 import MessageTime from "./MessageTime";
-function ChatMessages() {
+import { useParams } from "react-router-dom";
 
-    let messages = useSelector((state) => state.chat.find(ob => ob.roomId === parseInt(101)))
+function ChatMessages() {
+    
+    const params = useParams()
+    
+    let messages = useSelector((state) => state.chat.find(ob => ob.roomId === parseInt(params.id)))
     let userInfo = useSelector((state) => state.userInfo);
 
     let prev;
-    let date=new Date();
 
     function renderSwitch(msg, index, prev) {
     
@@ -38,6 +41,7 @@ function ChatMessages() {
                                 <OtherInfoContainer>
                                     <div style={{ textAlign: "left", color: "black" }}>{msg.sender.nickName}</div>
                                     <OtherMessage key={index}>{msg.message}</OtherMessage>
+                                    <MessageTime time={"202507111630"} prevTime={"202507111630"}/>
                                 </OtherInfoContainer>
                             </LeftContainer>
                 )
@@ -49,12 +53,14 @@ function ChatMessages() {
     return (
         <MessagesContainer>
             {
-                messages.msg.map((msg, index) => {
+                messages !== undefined ?
+                    messages.msg.map((msg, index) => {
                     const render = renderSwitch(msg, index, prev);
                     prev = msg;
                     return render;
-                }
-                )}
+                })
+                :null
+            }
         </MessagesContainer>
     );
 }

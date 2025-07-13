@@ -36,11 +36,11 @@ function App() {
           <Routes>
 
             <Route element={<MainLayout />}>
-              <Route path='/' element={<Friends />} />
+              <Route path='/users' element={<Friends />} />
               <Route path='/chats' element={<ChatRooms />} />
             </Route>
 
-            <Route path='/chats/101' element={
+            <Route path='/chats/:id' element={
               <>
                 <ChatHeader menuOpen={menuOpen} setMenuOpen={setMenuOpen} />
                 <BodyArea>

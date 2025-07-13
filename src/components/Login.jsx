@@ -27,8 +27,9 @@ function Login() {
         axios.post(`${SERVER_IP}/auth/login`,loginData,{withCredentials:true})
         .then((res)=>{
             console.log("로그인 결과값 ",res.data);
+            alert("로그인 성공");
             dispatch(setUserInfo(res.data));     
-            navigate("/");
+            navigate("/users");
         })
         .catch((err)=>alert("로그인 실패",err));
     }
