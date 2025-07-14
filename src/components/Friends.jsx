@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import friends from "../data/friendsData"; //테스트데이터
 import ListItem from "./ListItem";
 import { useSelector } from "react-redux";
 import { useCheckUser } from "../useSetUser";
@@ -7,12 +6,12 @@ import { useCheckUser } from "../useSetUser";
 function Friends() {
 
     const userInfo = useSelector((state)=>state.userInfo);
-
+    const friendInfo = useSelector((state)=>state.friendInfo);
     
     return (
         <ListContainer>
             <ListItem type={1} contents={userInfo}/>
-            {friends.map((friend) =>
+            {friendInfo.map((friend) =>
                 <ListItem type={1} key={friend.mobNum} contents={friend} />
             )}
         </ListContainer>

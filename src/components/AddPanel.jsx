@@ -5,30 +5,36 @@ import { useEffect } from "react";
 import FriendAddForm from "./FriendAddForm";
 
 function AddPanel({ onClose, isClosing }) {
-  const location = useLocation();
+    const location = useLocation();
 
-  // 닫는 애니메이션이 끝나고 나서 실제로 unmount 하도록
-  useEffect(() => {
-    if (isClosing) {
-      const timer = setTimeout(() => {
-        onClose(true); // 실제로 완전히 닫히도록 신호
-      }, 300); // 애니메이션 시간과 맞춰야 함
+    // 닫는 애니메이션이 끝나고 나서 실제로 unmount 하도록
+    useEffect(() => {
+        if (isClosing) {
+            const timer = setTimeout(() => {
+                onClose(true); // 실제로 완전히 닫히도록 신호
+            }, 300); // 애니메이션 시간과 맞춰야 함
 
-      return () => clearTimeout(timer);
-    }
-  }, [isClosing]);
+            return () => clearTimeout(timer);
+        }
+    }, [isClosing]);
 
-  return (
-    <PanelWrapper className={isClosing ? "slideOut" : "slideIn"}>
-      <CloseBtn onClick={() => onClose(false)}>X</CloseBtn>
-      {location.pathname === "/users" && 
-      <>
-      <div>👥 친구 추가 폼</div>
-      <FriendAddForm/>
-      </>}
-      {location.pathname === "/chats" && <div>💬 채팅방 생성 폼</div>}
-    </PanelWrapper>
-  );
+    const handleAddFriendSubmit = (e) => {
+        e.preventDefault(); // 새로고침 방지
+        
+
+    };
+
+    return (
+        <PanelWrapper className={isClosing ? "slideOut" : "slideIn"}>
+            <CloseBtn onClick={() => onClose(false)}>X</CloseBtn>
+            {location.pathname === "/users" &&
+                <>
+                    <div>👥 친구 추가 폼</div>
+                    <FriendAddForm onSubmit={handleAddFriendSubmit} />
+                </>}
+            {location.pathname === "/chats" && <div>💬 채팅방 생성 폼</div>}
+        </PanelWrapper>
+    );
 }
 
 const PanelWrapper = styled.div`

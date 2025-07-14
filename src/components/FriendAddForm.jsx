@@ -11,7 +11,7 @@ function FriendAddForm({ onSubmit }) {
       alert("전화번호를 입력해주세요.");
       return;
     }
-    
+    onSubmit(trimmed);
     setMobNum("");
   };
 
