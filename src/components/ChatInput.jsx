@@ -6,8 +6,10 @@ function ChatInput({client}) {
 
   let [input,setInput] = useState("");
   let userInfo = useSelector((state)=>state.userInfo);
-  console.log("입력하는곳 유저아이디",userInfo);
+  
   const inputRef = useRef();
+
+  let date = new Date();
 
   const sendMessage = ()=>{
     if (input === '') {
@@ -21,6 +23,7 @@ function ChatInput({client}) {
                 'roomId': 101,
                 'sender': userInfo,
                 'message': input,
+                'date': date.getHours()+":"+date.getMinutes()
             }
             //메시지 보내기
 

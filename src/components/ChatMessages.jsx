@@ -19,7 +19,7 @@ function ChatMessages() {
                     // 1.1 자기메시지 (콜백으로 받은 메시지가 자기자신이 보낸 경우)
                     msg.sender.mobNum === userInfo.mobNum ?       
                         <RightContainer className="rightcontainer">
-                            <MessageTime time={"202507111630"} prevTime={"2025"}/>
+                            <MessageTime time={msg.date} prevTime={prev.date}/>
                             <MyMessage key={index}>{msg.message}</MyMessage>
                         </RightContainer>
                         :
@@ -29,7 +29,7 @@ function ChatMessages() {
                             <LeftContainer>
                                 <div style={{ width: "48px", height: "40px", marginLeft: "12px" }}></div>
                                 <OtherMessage key={index}>{msg.message}</OtherMessage>
-                                <MessageTime time={"202507111630"} prevTime={"202507111630"}/>
+                                <MessageTime time={msg.date} prevTime={prev.date}/>
                             </LeftContainer>
                             :
                             // 1.3 프로필 이미지, 닉네임, 메시지 같이 렌더링
@@ -39,6 +39,7 @@ function ChatMessages() {
                                     <div style={{ textAlign: "left", color: "black" }}>{msg.sender.nickName}</div>
                                     <OtherMessage key={index}>{msg.message}</OtherMessage>
                                 </OtherInfoContainer>
+                                <MessageTime time={msg.date} prevTime={prev.date}/>
                             </LeftContainer>
                 )
             // 2. 시스템 메시지
