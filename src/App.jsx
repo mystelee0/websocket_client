@@ -17,25 +17,21 @@ import Login from './components/Login';
 import SignUp from './components/SignUp';
 import { useCheckUser } from './useSetUser';
 import { useWebsocket } from './useWebsocket';
+import Home from './components/Home';
 
 function App() {
   
   const [menuOpen, setMenuOpen] = useState(false);
-
-  let subscribeId;
-
-  //사용자정보 리덕스에 저장
   
   let [client] = useWebsocket();
-
 
   return (
     <>
       <StyledContainer onClick={() => setMenuOpen(false)}>
         <BrowserRouter>
           <Routes>
-
-            <Route element={<MainLayout />}>
+            <Route path='/' element={<Home/>}/>
+            <Route element={<MainLayout/>}>
               <Route path='/users' element={<Friends />} />
               <Route path='/chats' element={<ChatRooms />} />
             </Route>
@@ -53,8 +49,9 @@ function App() {
 
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<SignUp />} />
+            
           </Routes>
-
+          
 
         </BrowserRouter>
 

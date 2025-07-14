@@ -10,7 +10,8 @@ function ChatMessages() {
     
     let messages = useSelector((state) => state.chat.find(ob => ob.roomId === parseInt(params.id)))
     let userInfo = useSelector((state) => state.userInfo);
-
+    console.log("지금 채팅메시지 유저 명",userInfo.mobNum);
+    
     let prev;
 
     function renderSwitch(msg, index, prev) {
@@ -21,27 +22,26 @@ function ChatMessages() {
                 return (
                     // 1.1 자기메시지 (콜백으로 받은 메시지가 자기자신이 보낸 경우)
                     msg.sender.mobNum === userInfo.mobNum ?       
-                        <RightContainer className="rightcontainer">
+                        <RightContainer key={index}>
                             <MessageTime time={msg.date} prevTime={prev.date}/>
-                            <MyMessage key={index}>{msg.message}</MyMessage>
+                            <MyMessage >{msg.message}</MyMessage>
                         </RightContainer>
                         :
                         // 1.2 이전 메시지가 있는데, 보낸 사람이 같은 경우
                         prev !== null && prev.sender.mobNum === msg.sender.mobNum ?
                             //프로필 이미지와 닉네임 제외하고 렌더링
-                            <LeftContainer>
+                            <LeftContainer key={index}>
                                 <div style={{ width: "48px", height: "40px", marginLeft: "12px" }}></div>
                                 <OtherMessage key={index}>{msg.message}</OtherMessage>
                                 <MessageTime time={msg.date} prevTime={prev.date}/>
                             </LeftContainer>
                             :
                             // 1.3 프로필 이미지, 닉네임, 메시지 같이 렌더링
-                            <LeftContainer>
+                            <LeftContainer key={index}>
                                 <ShowProfileImage type={1} contents={msg.sender} />
                                 <OtherInfoContainer>
                                     <div style={{ textAlign: "left", color: "black" }}>{msg.sender.nickName}</div>
                                     <OtherMessage key={index}>{msg.message}</OtherMessage>
-                                    <MessageTime time={"202507111630"} prevTime={"202507111630"}/>
                                 </OtherInfoContainer>
                                 <MessageTime time={msg.date} prevTime={prev.date}/>
                             </LeftContainer>
