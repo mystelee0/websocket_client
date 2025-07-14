@@ -2,6 +2,9 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Client } from '@stomp/stompjs';
 import { addMessage } from "./redux/chatSlice";
+
+const WS_IP = import.meta.env.VITE_WS_IP;
+
 export function useWebsocket() {
 
     let [client, setClient] = useState();
@@ -22,7 +25,7 @@ export function useWebsocket() {
         }
 
         const client = new Client({
-            brokerURL: `ws://192.168.106.80:8080/websocket-server`,
+            brokerURL: `${WS_IP}/websocket-server`,
             onConnect: () => {
                 let subscribeId = client.subscribe(`/user/${storedUser}/queue/message`, messageCallback);
                 client.subscribe(`/topic/101`, messageCallback);

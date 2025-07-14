@@ -16,9 +16,9 @@ function MainLayout() {
             <PageTitle >{getTitle()}</PageTitle>
             <Outlet />
             <div>
-                <Link to="/">친구</Link>
-                <Link to="/chats">채팅</Link>
-                <Link to={"/login"}>로그인</Link>
+                <Link to="/users">친구 </Link>
+                <Link to="/chats">채팅 </Link>
+                <Link to={"/login"}>로그인 </Link>
             </div>
         </>
     )

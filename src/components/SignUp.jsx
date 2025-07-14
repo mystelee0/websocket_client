@@ -1,9 +1,14 @@
 import axios from "axios";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+
+const SERVER_IP = import.meta.env.VITE_SERVER_IP;
 
 function SignUp() {
 
+  const navigate = useNavigate();
+  
     let [newUser,setNewUser]=useState({
         mobNum:"",
         nickName:"",
@@ -16,11 +21,14 @@ function SignUp() {
         })
     }
   function handleSignUp(){
-    axios.post("http://localhost:8080/users",newUser)
+    axios.post(`${SERVER_IP}/users`,newUser)
     .then((res)=>{
         console.log(res);
+        alert("회원가입 성공");
+        navigate("/login");
     }).catch((err)=>{
         console.log(err);
+        alert("가입 실패",err);
     })
   };
 

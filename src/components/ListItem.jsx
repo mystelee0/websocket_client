@@ -1,14 +1,23 @@
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import ShowProfileImage from "./ShowProfileImage";
 
-function ListItem({ contents, type }) {
+function ListItem({ contents, type}) {
   const navigate = useNavigate();
+  const location = useLocation()
+
+  function handleOnClick(){
+    if(location.pathname==="/chats"){
+      return navigate(`/chats/${contents.id}`);
+    }else if(location.pathname==="/"){
+      return navigate(`/users/${contents.mobNum}`);
+    }
+  }
   return (
-    <ListContainer onClick={()=>navigate(`/chats/${contents.id}`)}>
+    <ListContainer onClick={handleOnClick}>
       <ShowProfileImage type={type} contents={contents}/>
       <ListInfo>
-        <ListTitle>{contents.name || contents.roomName}</ListTitle>
+        <ListTitle>{contents.nickName || contents.roomName}</ListTitle>
 
           <ListMessage>{contents.message}</ListMessage>
         
