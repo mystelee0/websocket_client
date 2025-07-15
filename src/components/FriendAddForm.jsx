@@ -23,7 +23,7 @@ function FriendAddForm({ onSubmit }) {
         value={mobNum}
         onChange={(e) => setMobNum(e.target.value)}
       />
-      <AddButton type="submit">추가</AddButton>
+      <AddButton type="submit">검색</AddButton>
     </FormContainer>
   );
 }

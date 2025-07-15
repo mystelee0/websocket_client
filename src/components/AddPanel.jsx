@@ -1,11 +1,20 @@
 // components/AddPanel.jsx
 import styled from "styled-components";
 import { useLocation } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import FriendAddForm from "./FriendAddForm";
+import axios from "axios";
+import ListItem from "./ListItem";
+import { useDispatch, useSelector } from "react-redux";
+import { addFriendInfo } from "../redux/friendInfoSlice";
+
+const SERVER_IP = import.meta.env.VITE_SERVER_IP;
 
 function AddPanel({ onClose, isClosing }) {
     const location = useLocation();
+    let [foundUser,setFoundUser] = useState();
+    const dispatch = useDispatch();
+
 
     // 닫는 애니메이션이 끝나고 나서 실제로 unmount 하도록
     useEffect(() => {
@@ -18,10 +27,14 @@ function AddPanel({ onClose, isClosing }) {
         }
     }, [isClosing]);
 
-    const handleAddFriendSubmit = (e) => {
-        e.preventDefault(); // 새로고침 방지
-        
-
+    const handleAddFriendSubmit = (mobNum) => {
+        //친구추가 작성해야함
+        axios.get(`${SERVER_IP}/users/${mobNum}`,{withCredentials:true})
+        .then((res)=>{
+          setFoundUser(res.data);
+        }).catch((err)=>{
+          console.log(err);
+        });
     };
 
     return (
@@ -31,6 +44,16 @@ function AddPanel({ onClose, isClosing }) {
                 <>
                     <div>👥 친구 추가 폼</div>
                     <FriendAddForm onSubmit={handleAddFriendSubmit} />
+                    {
+                      foundUser?
+                      <>
+                      <ListItem type={1} contents={foundUser}/>
+                      <button onClick={()=>{
+                        dispatch(addFriendInfo(foundUser));
+                      }}>친구 추가</button>
+                      </>
+                      :null
+                    }
                 </>}
             {location.pathname === "/chats" && <div>💬 채팅방 생성 폼</div>}
         </PanelWrapper>

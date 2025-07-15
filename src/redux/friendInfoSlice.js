@@ -19,8 +19,13 @@ export const friendInfoSlice=createSlice({
         setFriendInfo(state,action){
             return action.payload
         },
+        addFriendInfo(state,action){
+            let newFriend = action.payload;
+            state.push(newFriend);
+        }
     }
 })
 
 export const {setFriendInfo} = friendInfoSlice.actions;
+export const {addFriendInfo} = friendInfoSlice.actions;
 export default friendInfoSlice.reducer;
