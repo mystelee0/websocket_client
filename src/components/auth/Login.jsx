@@ -2,7 +2,7 @@ import axios from "axios";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
-import { setUserInfo } from "../redux/userInfoSlice";
+import { setUserInfo } from "../../redux/userInfoSlice";
 import { useNavigate } from "react-router-dom";
 
 const SERVER_IP = import.meta.env.VITE_SERVER_IP;

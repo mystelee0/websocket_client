@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { useSelector } from "react-redux"
-import ShowProfileImage from "./ShowProfileImage";
+import ShowProfileImage from "../ShowProfileImage";
 import MessageTime from "./MessageTime";
 import { useParams } from "react-router-dom";
 
