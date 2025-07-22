@@ -1,11 +1,8 @@
 
-function MessageTime({time,prevTime}){
+function MessageTime({time}){
 
-    if(prevTime===undefined || time===prevTime){
-        return <span style={{fontSize:"12px",color:"black",alignSelf:"flex-end", marginRight:"5px"}}>{time}</span>
-    }else {
-        return null;
-    }
+    return <span style={{fontSize:"12px",color:"black",alignSelf:"flex-end", marginRight:"5px"}}>{time}</span>
+    
 }
 
 export default MessageTime;

@@ -5,62 +5,79 @@ import MessageTime from "./MessageTime";
 import { useParams } from "react-router-dom";
 
 function ChatMessages() {
-    
+
     const params = useParams()
-    
+
     let messages = useSelector((state) => state.chat.find(ob => ob.roomId === parseInt(params.id)))
     let userInfo = useSelector((state) => state.userInfo);
-    console.log("지금 채팅메시지 유저 명",userInfo.mobNum);
-    
-    let prev;
+    console.log("지금 채팅메시지 유저 명", userInfo.mobNum);
 
-    function renderSwitch(msg, index, prev) {
-    
-        switch (msg.messageType) {
-            // 1. 사용자 메시지
-            case 1:
-                return (
-                    // 1.1 자기메시지 (콜백으로 받은 메시지가 자기자신이 보낸 경우)
-                    msg.sender.mobNum === userInfo.mobNum ?       
-                        <RightContainer key={index}>
-                            <MessageTime time={msg.date} prevTime={prev.date}/>
-                            <MyMessage >{msg.message}</MyMessage>
-                        </RightContainer>
-                        :
-                        // 1.2 이전 메시지가 있는데, 보낸 사람이 같은 경우
-                        prev !== null && prev.sender.mobNum === msg.sender.mobNum ?
-                            //프로필 이미지와 닉네임 제외하고 렌더링
-                            <LeftContainer key={index}>
-                                <div style={{ width: "48px", height: "40px", marginLeft: "12px" }}></div>
-                                <OtherMessage key={index}>{msg.message}</OtherMessage>
-                                <MessageTime time={msg.date} prevTime={prev.date}/>
-                            </LeftContainer>
-                            :
-                            // 1.3 프로필 이미지, 닉네임, 메시지 같이 렌더링
-                            <LeftContainer key={index}>
-                                <ShowProfileImage type={1} contents={msg.sender} />
-                                <OtherInfoContainer>
-                                    <div style={{ textAlign: "left", color: "black" }}>{msg.sender.nickName}</div>
-                                    <OtherMessage key={index}>{msg.message}</OtherMessage>
-                                </OtherInfoContainer>
-                                <MessageTime time={msg.date} prevTime={prev.date}/>
-                            </LeftContainer>
-                )
-            // 2. 시스템 메시지
-            case 2:
-                return <SystemMessage key={index}>{`System : ${msg.message}`}</SystemMessage>;
+    let prev, next;
+    let len = messages.msgs.length;
+
+
+    // 조건에 따른 메시지 출력 함수
+    function renderSwitch(msg, index, prev, next) {
+        
+        // 시간 표시여부 default : true
+        let timeRender = true;
+
+        // 현 채팅과 다음 채팅의 유저정보와 시간이 같을경우
+        if (next?.sender.mobNum === msg?.sender.mobNum && next?.date === msg?.date) { //옵셔널 체이닝 적용해봄
+            //시간컴포넌트 미표시
+            timeRender = false;
         }
+
+        // 1. 사용자 메시지
+        if (msg.messageType === 1)
+
+            // 1.1 본인 메시지 (콜백으로 받은 메시지가 자기자신이 보낸 경우)
+            if (msg.sender.mobNum === userInfo.mobNum)
+                return (
+                    <RightContainer key={index}>
+                        {timeRender?<MessageTime time={msg.date} />:null}
+                        <MyMessage >{msg.message}</MyMessage>
+                    </RightContainer>
+                )
+            // 1.2 상대방 메시지 시작 (이전 메시지가 있는데, 보낸 사람이 다른 경우 || 같은 사용자지만 시간이 다른경우)
+            else if ( (prev && prev.sender.mobNum !== msg.sender.mobNum) || prev.date!==msg.date)
+                // 프로필 이미지, 닉네임, 메시지 같이 출력
+                return (
+                    <LeftContainer key={index}>
+                        <ShowProfileImage type={1} contents={msg.sender} />
+                        <OtherInfoContainer>
+                            <div style={{ textAlign: "left", color: "black" }}>{msg.sender.nickName}</div>
+                            <OtherMessage key={index}>{msg.message}</OtherMessage>
+                        </OtherInfoContainer>
+                        {timeRender?<MessageTime time={msg.date} />:null}
+                    </LeftContainer>
+                )
+            // 1.3 상대방 메시지 이어짐
+            else
+                // 메시지만 출력 
+                return (
+                    <LeftContainer key={index}>
+                        <div style={{ width: "48px", height: "40px", marginLeft: "12px" }}></div>
+                        <OtherMessage key={index}>{msg.message}</OtherMessage>
+                        {timeRender?<MessageTime time={msg.date} />:null}
+                    </LeftContainer>
+                )
+        // 2. 시스템 메시지 
+        if (msg.messageType === 2)
+            return <SystemMessage key={index}>{`System : ${msg.message}`}</SystemMessage>;
+
     }
     return (
         <MessagesContainer>
             {
                 messages !== undefined ?
-                    messages.msg.map((msg, index) => {
-                    const render = renderSwitch(msg, index, prev);
-                    prev = msg;
-                    return render;
-                })
-                :null
+                    messages.msgs.map((msg, index) => {
+                        next = messages.msgs[index + 1];
+                        const render = renderSwitch(msg, index, prev, next);
+                        prev = msg;
+                        return render;
+                    })
+                    : null
             }
         </MessagesContainer>
     );

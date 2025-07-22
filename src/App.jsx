@@ -2,9 +2,9 @@ import { useEffect, useRef, useState } from 'react'
 import './App.css'
 
 
-import ChatHeader from './components/ChatHeader';
-import ChatMessages from './components/ChatMessages';
-import ChatInput from './components/ChatInput';
+import ChatHeader from './components/chatting/ChatHeader';
+import ChatMessages from './components/chatting/ChatMessages';
+import ChatInput from './components/chatting/ChatInput';
 import SideMenu from './components/SideMenu';
 
 import styled from 'styled-components';
@@ -13,8 +13,8 @@ import { BrowserRouter, Link, Route, Routes } from 'react-router-dom';
 import Friends from './components/Friends';
 import MainLayout from './components/MainLayout';
 import ChatRooms from './components/ChatRooms';
-import Login from './components/Login';
-import SignUp from './components/SignUp';
+import Login from './components/auth/Login';
+import SignUp from './components/auth/SignUp';
 import { useCheckUser } from './useSetUser';
 import { useWebsocket } from './useWebsocket';
 import Home from './components/Home';

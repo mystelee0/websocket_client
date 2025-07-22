@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState=[
         {
             roomId:101,
-            msg:[
+            msgs:[
                 {messageType : 2, sender : 'system', message : 'this is test message'},
             ]
         },
@@ -23,7 +23,7 @@ export const chatSlice=createSlice({
                 alert('roomId 오류 ');//방에 초대된경우 없음 새로 넣어야함
             }
             else {
-                state[idx].msg.push(msg)
+                state[idx].msgs.push(msg)
             }
         }
     }
