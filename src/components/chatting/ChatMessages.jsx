@@ -91,6 +91,19 @@ background-color: #e5ddd5;
 display: flex;
 flex-direction: column;
 gap: 5px;
+
+  overflow: auto;
+
+  /* 스크롤바 숨기기 - 크롬, 사파리 */
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* IE, Edge */
+  -ms-overflow-style: none;
+
+  /* Firefox */
+  scrollbar-width: none;
 `;
 const RightContainer = styled.div`
     display:flex;

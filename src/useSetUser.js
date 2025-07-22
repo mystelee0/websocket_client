@@ -11,17 +11,23 @@ export function useCheckUser() {
 
     let user = useSelector((state) => state.userInfo);
     let dispatch = useDispatch();
-    let navigate = useNavigate();
+    const navigate = useNavigate();
 
     useEffect(() => {
-        if (user.mobNum === "") {
+        if (user.mobNum==="") {
             axios.get(`${SERVER_IP}/auth/me`, { withCredentials: true }) //헤더 json으로 만들기 
                 .then((res) => {
                     console.log(res);
-                    dispatch(setUserInfo(res.data));
+                    if(user.mobNum!==res.data.mobNum){
+                        console.log("유저정보 기존과 다름 !!",user.mobNum,res.data.mobNum);
+                        dispatch(setUserInfo(res.data));
+                    }
+                        
+                    //return true;
                     navigate("/users");
                 })
                 .catch(() => {
+                    //return false;
                     alert("로그인 페이지로 이동합니다...");
                     navigate("/login");
                 })

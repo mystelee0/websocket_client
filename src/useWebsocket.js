@@ -5,17 +5,16 @@ import { addMessage } from "./redux/chatSlice";
 
 const WS_IP = import.meta.env.VITE_WS_IP;
 
-export function useWebsocket() {
+export function useWebsocket(setClient) {
     console.log("@@@@useWebsocket 호출@@@@");
-    let [client, setClient] = useState();
     let dispatch = useDispatch();
     let storedUser = useSelector((state) => state.userInfo);
 
     //웹소켓 연결
     useEffect(() => {
         console.log("useweboscket useeffect 실행", storedUser);
-        if (!storedUser.mobNum) {
-            console.log("storedUser가 비어있어 웹소켓 연결 안함");
+        if (storedUser.mobNum==="" ) {
+            console.log("storedUser가 비어있어 웹소켓 연결 안함 xxx");
             return;
         }
         //메세지 수신
@@ -44,6 +43,7 @@ export function useWebsocket() {
                 console.log(subscribeId);
 
                 return () => {
+                    console.log("구독취소",subscribeId);
                     subscribeId.unsubscribe();
                 }
             },
@@ -56,7 +56,6 @@ export function useWebsocket() {
         setClient(client);
 
         client.activate();
-    }, [storedUser]);
+    }, [storedUser?.mobNum]);
 
-    return [client];
 }

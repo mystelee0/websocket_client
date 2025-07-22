@@ -1,13 +1,17 @@
-import { Link, Outlet, useLocation } from "react-router-dom";
+import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { useCheckUser } from "../useSetUser";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import AddPanel from "./AddPanel";
+import { useWebsocket } from "../useWebsocket";
 
-function MainLayout() {
+function MainLayout({setClient}) {
 
     const location = useLocation();
+    const navigate = useNavigate();
 
+    useCheckUser();
+    
     function getTitle() {
         if (location.pathname === "/users") return "친구";
         else if (location.pathname === "/chats") return "채팅";
@@ -30,7 +34,8 @@ function MainLayout() {
             setIsPanelClosing(true);
         }
     }
-    useCheckUser();
+
+
     return (
         <>
             <PageTitle >
