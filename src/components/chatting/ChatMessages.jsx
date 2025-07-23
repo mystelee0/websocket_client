@@ -3,6 +3,7 @@ import { useSelector } from "react-redux"
 import ShowProfileImage from "../ShowProfileImage";
 import MessageTime from "./MessageTime";
 import { useParams } from "react-router-dom";
+import { useEffect, useRef } from "react";
 
 function ChatMessages() {
 
@@ -14,7 +15,12 @@ function ChatMessages() {
 
     let prev, next;
     
-
+    const containerRef = useRef();
+    
+    useEffect(()=>{
+        //맨 밑으로 자동 스크롤
+        containerRef.current.scrollTo({top:containerRef.current.scrollHeight, behavior:"smooth"});
+    },[messages])
 
     // 조건에 따른 메시지 출력 함수
     function renderSwitch(msg, index, prev, next) {
@@ -75,7 +81,7 @@ function ChatMessages() {
 
     }
     return (
-        <MessagesContainer>
+        <MessagesContainer ref={containerRef}>
             {
                 messages !== undefined ?
                     messages.msgs.map((msg, index) => {
