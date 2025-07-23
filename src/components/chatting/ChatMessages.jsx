@@ -20,9 +20,12 @@ function ChatMessages() {
     function renderSwitch(msg, index, prev, next) {
         let nextDate = new Date(next?.date);
         let msgDate = new Date(msg?.date);
+        let prevDate = new Date(prev?.date);
 
         let nextHm = nextDate.getHours()+""+nextDate.getMinutes();
         let msgHm = msgDate.getHours()+""+msgDate.getMinutes();
+        let prevHm = prevDate.getHours()+""+prevDate.getMinutes();
+
         // 시간 표시여부 default : true
         let timeRender = true;
 
@@ -44,7 +47,7 @@ function ChatMessages() {
                     </RightContainer>
                 )
             // 1.2 상대방 메시지 시작 (이전 메시지가 있는데, 보낸 사람이 다른 경우 || 같은 사용자지만 시간이 다른경우)
-            else if ( (prev && prev.sender.mobNum !== msg.sender.mobNum) || prev.date!==msg.date)
+            else if ( (prev && prev.sender.mobNum !== msg.sender.mobNum) || prevHm!==msgHm)
                 // 프로필 이미지, 닉네임, 메시지 같이 출력
                 return (
                     <LeftContainer key={index}>
