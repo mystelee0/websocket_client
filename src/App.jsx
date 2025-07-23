@@ -1,12 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import './App.css'
 
-
-import ChatHeader from './components/chatting/ChatHeader';
-import ChatMessages from './components/chatting/ChatMessages';
-import ChatInput from './components/chatting/ChatInput';
-import SideMenu from './components/SideMenu';
-
 import styled from 'styled-components';
 import { BrowserRouter, Link, Route, Routes } from 'react-router-dom';
 
@@ -18,6 +12,8 @@ import SignUp from './components/auth/SignUp';
 import { useCheckUser } from './useSetUser';
 import { useWebsocket } from './useWebsocket';
 import Home from './components/Home';
+import AuthProvider from './components/auth/AuthProvider';
+import ChatRoom from './components/chatting/ChatRoom';
 
 function App() {
 
@@ -32,22 +28,22 @@ function App() {
         <BrowserRouter>
           <Routes>
             <Route path='/' element={<Home />} />
-            <Route element={<MainLayout setClient={setClient}/>}>
-              <Route path='/users' element={<Friends />} />
-              <Route path='/chats' element={<ChatRooms />} />
+
+            {/** 유저 로그인여부 체크*/ }
+            <Route element={<AuthProvider />}>
+              {/** 헤더,푸터 삽입 레이아웃 */}
+              <Route element={<MainLayout />}>
+                {/** 친구목록 화면 */}
+                <Route path='/users' element={<Friends />} />
+                {/** 채팅방 목록 화면 */}
+                <Route path='/chats' element={<ChatRooms />} />
+              </Route>
+
+              {/** 채팅방 들어갔을때 화면 */}
+              <Route path='/chats/:id' element={<ChatRoom/>} />
             </Route>
 
-            <Route path='/chats/:id' element={
-              <>
-                <ChatHeader menuOpen={menuOpen} setMenuOpen={setMenuOpen} />
-                <BodyArea>
-                  <ChatMessages />
-                  <SideMenu menuOpen={menuOpen} />
-                </BodyArea>
-                <ChatInput client={client} />
-              </>
-            } />
-
+            {/** 로그인 및 회원가입 화면 */}
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<SignUp />} />
 
@@ -75,10 +71,5 @@ const StyledContainer = styled.div`
   font-family: 'Arial', sans-serif;
   background:#fff;
 `;
-const BodyArea = styled.div`
-  flex: 1;
-  display: flex;
-  position: relative;
-  overflow: hidden;
-`;
+
 export default App

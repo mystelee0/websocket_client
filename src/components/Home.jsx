@@ -18,7 +18,7 @@ function Home({}){
     return (
         <>
         <div>
-            <h2>반갑..!</h2>
+            <h2>채팅 사이트 들어온걸 환영..!</h2>
         </div>
         <button onClick={handleOnClick}>시작하기</button>
         </>

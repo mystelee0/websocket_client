@@ -5,13 +5,12 @@ import { useEffect, useState } from "react";
 import AddPanel from "./AddPanel";
 import { useWebsocket } from "../useWebsocket";
 
-function MainLayout({setClient}) {
+function MainLayout() {
 
     const location = useLocation();
-    const navigate = useNavigate();
 
     useCheckUser();
-    
+
     function getTitle() {
         if (location.pathname === "/users") return "친구";
         else if (location.pathname === "/chats") return "채팅";
@@ -49,7 +48,7 @@ function MainLayout({setClient}) {
             <div>
                 <Link to="/users">친구 </Link>
                 <Link to="/chats">채팅 </Link>
-                <Link to={"/login"}>로그인 </Link>
+                <Link to={"/"}>홈 </Link>
             </div>
         </>
     )
