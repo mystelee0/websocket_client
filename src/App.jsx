@@ -17,9 +17,7 @@ import ChatRoom from './components/chatting/ChatRoom';
 
 function App() {
 
-  const [menuOpen, setMenuOpen] = useState(false);
   const [client, setClient] = useState();
-
   useWebsocket(setClient);
 
   return (
@@ -40,7 +38,7 @@ function App() {
               </Route>
 
               {/** 채팅방 들어갔을때 화면 */}
-              <Route path='/chats/:id' element={<ChatRoom/>} />
+              <Route path='/chats/:id' element={<ChatRoom client={client}/>} />
             </Route>
 
             {/** 로그인 및 회원가입 화면 */}

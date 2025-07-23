@@ -23,7 +23,7 @@ function ChatInput({client}) {
                 'roomId': 101,
                 'sender': userInfo,
                 'message': input,
-                'date': date.getHours()+":"+date.getMinutes()
+                'date': date
             }
             //메시지 보내기
 

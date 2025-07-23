@@ -1,11 +1,15 @@
-function ChatRoom(){
+import styled from "styled-components";
+import ChatHeader from "./ChatHeader";
+import ChatMessages from "./ChatMessages";
+import ChatInput from "./ChatInput";
+
+function ChatRoom({client}){
 
     return (
                 <>
-                  <ChatHeader menuOpen={menuOpen} setMenuOpen={setMenuOpen} />
+                  <ChatHeader/>
                   <BodyArea>
                     <ChatMessages />
-                    <SideMenu menuOpen={menuOpen} />
                   </BodyArea>
                   <ChatInput client={client} />
                 </>

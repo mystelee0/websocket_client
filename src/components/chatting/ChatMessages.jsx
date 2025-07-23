@@ -13,17 +13,21 @@ function ChatMessages() {
     console.log("지금 채팅메시지 유저 명", userInfo.mobNum);
 
     let prev, next;
-    let len = messages.msgs.length;
+    
 
 
     // 조건에 따른 메시지 출력 함수
     function renderSwitch(msg, index, prev, next) {
-        
+        let nextDate = new Date(next?.date);
+        let msgDate = new Date(msg?.date);
+
+        let nextHm = nextDate.getHours()+""+nextDate.getMinutes();
+        let msgHm = msgDate.getHours()+""+msgDate.getMinutes();
         // 시간 표시여부 default : true
         let timeRender = true;
 
         // 현 채팅과 다음 채팅의 유저정보와 시간이 같을경우
-        if (next?.sender.mobNum === msg?.sender.mobNum && next?.date === msg?.date) { //옵셔널 체이닝 적용해봄
+        if (next?.sender.mobNum === msg?.sender.mobNum && nextHm === msgHm) { //옵셔널 체이닝 적용해봄
             //시간컴포넌트 미표시
             timeRender = false;
         }
