@@ -9,6 +9,7 @@ function Footer() {
     { path: "/users", label: "친구", icon: "👥" },
     { path: "/chats", label: "채팅", icon: "💬" },
     { path: "/", label: "홈", icon: "🏠" },
+    { path: "#", label: "더보기", icon: "•••" }
   ];
 
   return (
@@ -40,7 +41,7 @@ const FooterContainer = styled.div`
 const FooterBox = styled.div`
   flex: 1;
   text-align: center;
-  padding: 8px 0;
+  padding: 6px 0;
   cursor: pointer;
   background-color: ${({ $active }) => ($active ? "#e0e0e0" : "transparent")};
   color: ${({ $active }) => ($active ? "#000" : "#888")};
