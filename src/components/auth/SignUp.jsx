@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 const SERVER_IP = import.meta.env.VITE_SERVER_IP;
@@ -43,7 +43,7 @@ function SignUp() {
         <LoginButton onClick={handleSignUp}>
           가입하기
         </LoginButton>
-        <InfoText>계정이 이미 있으신가요? <a href="/login">로그인하기</a></InfoText>
+        <InfoText>계정이 이미 있으신가요? <Link to={"/login"}>로그인하기</Link></InfoText>
       </LoginBox>
     </Container>
   );

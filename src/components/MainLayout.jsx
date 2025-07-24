@@ -4,6 +4,7 @@ import { useCheckUser } from "../useSetUser";
 import { useEffect, useState } from "react";
 import AddPanel from "./AddPanel";
 import { useWebsocket } from "../useWebsocket";
+import Footer from "./Footer";
 
 function MainLayout() {
 
@@ -14,6 +15,7 @@ function MainLayout() {
     function getTitle() {
         if (location.pathname === "/users") return "친구";
         else if (location.pathname === "/chats") return "채팅";
+        else if (location.pathname === "/") return "WELCOME !";
     }
 
     const [isPanelVisible, setIsPanelVisible] = useState(false);
@@ -45,11 +47,7 @@ function MainLayout() {
             {isPanelVisible && <AddPanel onClose={handlePanelClose} isClosing={isPanelClosing} />}
             <Outlet />
 
-            <div>
-                <Link to="/users">친구 </Link>
-                <Link to="/chats">채팅 </Link>
-                <Link to={"/"}>홈 </Link>
-            </div>
+            <Footer/>
         </>
     )
 }

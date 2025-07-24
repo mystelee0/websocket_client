@@ -22,23 +22,26 @@ function App() {
 
   return (
     <>
-      <StyledContainer onClick={() => setMenuOpen(false)}>
+      <StyledContainer >
         <BrowserRouter>
           <Routes>
-            <Route path='/' element={<Home />} />
 
-            {/** 유저 로그인여부 체크*/ }
+            {/** 유저 로그인여부 체크*/}
             <Route element={<AuthProvider />}>
               {/** 헤더,푸터 삽입 레이아웃 */}
               <Route element={<MainLayout />}>
+
+                {/** welcome 화면 */}
+                <Route path='/' element={<Home />} />
                 {/** 친구목록 화면 */}
                 <Route path='/users' element={<Friends />} />
                 {/** 채팅방 목록 화면 */}
                 <Route path='/chats' element={<ChatRooms />} />
+
               </Route>
 
               {/** 채팅방 들어갔을때 화면 */}
-              <Route path='/chats/:id' element={<ChatRoom client={client}/>} />
+              <Route path='/chats/:id' element={<ChatRoom client={client} />} />
             </Route>
 
             {/** 로그인 및 회원가입 화면 */}

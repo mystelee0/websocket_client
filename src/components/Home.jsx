@@ -7,20 +7,11 @@ function Home({}){
     let mobNum = useSelector((state)=>state.userInfo.mobNum);
     const navigate = useNavigate();
 
-    function handleOnClick(){
-        if(mobNum===""){
-            alert("로그인 페이지로 이동합니다.");
-            navigate("/login");
-        }else{
-            navigate("/users");
-        }
-    }
     return (
         <>
-        <div>
-            <h2>채팅 사이트 들어온걸 환영..!</h2>
+        <div style={{flex:1}}>
+            <h2>채팅 사이트에 들어온 것을 환영함..!</h2>
         </div>
-        <button onClick={handleOnClick}>시작하기</button>
         </>
     );
 }

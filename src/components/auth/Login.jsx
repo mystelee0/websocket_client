@@ -3,7 +3,8 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
 import { setUserInfo } from "../../redux/userInfoSlice";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useCheckUser } from "../../useSetUser";
 
 const SERVER_IP = import.meta.env.VITE_SERVER_IP;
 
@@ -44,7 +45,7 @@ function Login() {
                 <LoginButton onClick={handleLogin}>
                     로그인
                 </LoginButton>
-                <InfoText>계정이 없으신가요? <a href="/signup">회원가입</a></InfoText>
+                <InfoText>계정이 없으신가요? <Link to={"/signup"}>회원가입</Link></InfoText>
             </LoginBox>
         </Container>
     );

@@ -6,34 +6,33 @@ import { useNavigate } from "react-router-dom";
 
 const SERVER_IP = import.meta.env.VITE_SERVER_IP;
 
-//새로고침 발생 시 유저정보 없어지는 상황을 대처하기 위함
+/**
+ * 로그인 여부 확인 함수
+ * 
+ * 요청 결과로 유저정보가 담겨있으면 리덕스 유저정보 공간에 저장
+ * check()의 결과로 true,false 반환
+ */
 export function useCheckUser() {
 
-    let user = useSelector((state) => state.userInfo);
-    let dispatch = useDispatch();
-    const navigate = useNavigate();
+    const userMobNum = useSelector((state) => state.userInfo.mobNum);
+    const dispatch = useDispatch();
 
-    useEffect(() => {
-        if (user.mobNum==="") {
-            axios.get(`${SERVER_IP}/auth/me`, { withCredentials: true }) //헤더 json으로 만들기 
-                .then((res) => {
-                    console.log(res);
-                    if(user.mobNum!==res.data.mobNum){
-                        console.log("유저정보 기존과 다름 !!",user.mobNum,res.data.mobNum);
-                        dispatch(setUserInfo(res.data));
-                    }
-                        
-                    //return true;
-                    navigate("/users");
-                })
-                .catch(() => {
-                    //return false;
-                    alert("로그인 페이지로 이동합니다...");
-                    navigate("/login");
-                })
+    async function check() {
+        try {
+            const res = await axios.get(`${SERVER_IP}/auth/me`, { withCredentials: true })
+            console.log("세션 확인 결과 : ", res.data);
+            //새로고침으로 유저정보가 비워진 경우
+            if (userMobNum !== res.data.mobNum) {
+                //유저정보 다시 저장
+                dispatch(setUserInfo(res.data));
+            }
+
+            return true;
+
+        } catch (err) {
+            return false;
         }
+    }
 
-
-    }, []);
-
+    return check;
 }
