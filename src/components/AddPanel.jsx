@@ -15,7 +15,6 @@ function AddPanel({ onClose, isClosing }) {
     let [foundUser,setFoundUser] = useState();
     const dispatch = useDispatch();
 
-
     // 닫는 애니메이션이 끝나고 나서 실제로 unmount 하도록
     useEffect(() => {
         if (isClosing) {
@@ -37,6 +36,21 @@ function AddPanel({ onClose, isClosing }) {
         });
     };
 
+    const friendList = useSelector((state)=>state.friendInfo);
+    let [checkedList,setCheckedList] = useState([]);
+    
+    function handleCheck(e){
+      if(e.target.checked){
+        console.log("체크",e.target.id);
+        setCheckedList(prev => [...prev, e.target.id]);
+      }else{
+        console.log("해제",e.target.id);
+        setCheckedList(prev => prev.filter(el=>el!==e.target.id));
+      }
+    }
+    function handleCreateChatRoom(){
+
+    }
     return (
         <PanelWrapper className={isClosing ? "slideOut" : "slideIn"}>
             <CloseBtn onClick={() => onClose(false)}>X</CloseBtn>
@@ -55,7 +69,22 @@ function AddPanel({ onClose, isClosing }) {
                       :null
                     }
                 </>}
-            {location.pathname === "/chats" && <div>💬 채팅방 생성 폼</div>}
+            {location.pathname === "/chats" && 
+            <>
+            <div>💬 채팅방 생성 폼</div>
+            <FriendAddForm onSubmit={handleAddFriendSubmit} />
+            {
+              friendList.map((value,index)=>{
+                return (
+                  <div key={index}>
+                <span>{value.nickName}</span>
+                <input id={value.mobNum} type="checkbox" onChange={(e)=>handleCheck(e)}></input>
+                  </div>
+                )
+              })
+            }
+            <button onClick={()=>{alert(checkedList)}}>확인</button>
+            </>}
         </PanelWrapper>
     );
 }

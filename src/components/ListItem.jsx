@@ -9,7 +9,7 @@ function ListItem({ contents, type}) {
   function handleOnClick(){
     if(location.pathname==="/chats"){
       return navigate(`/chats/${contents.id}`);
-    }else if(location.pathname==="/"){
+    }else if(location.pathname==="/users"){
       return navigate(`/users/${contents.mobNum}`);
     }
   }
