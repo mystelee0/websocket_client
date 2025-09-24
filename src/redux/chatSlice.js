@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState=[
         {
-            roomId:101,
+            roomId:"101",
             msgs:[
                 {messageType : 2, sender : 'system', message : 'this is test message'},
             ]

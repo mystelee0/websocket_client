@@ -38,9 +38,12 @@ export function useWebsocket(setClient) {
         const client = new Client({
             brokerURL: `${WS_IP}/websocket-server`,
             onConnect: () => {
+                // 각 유저는 자기자신의 이름으로 구독 (queue)
                 const subscribeId = client.subscribe(`/user/${storedUser.mobNum}/queue/message`, messageCallback);
-                client.subscribe(`/topic/101`, messageCallback);
                 console.log(subscribeId);
+
+                //시스템이 브로드캐스트해야하는 경우(전체 공지?)를 생각해서 일단 냅둠
+                client.subscribe(`/topic/101`, messageCallback); 
 
                 return () => {
                     console.log("구독취소",subscribeId);

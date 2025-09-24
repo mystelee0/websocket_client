@@ -49,7 +49,12 @@ function AddPanel({ onClose, isClosing }) {
       }
     }
     function handleCreateChatRoom(){
+      // axios.post(`${SERVER_IP}/chats/${1234}`,checkedList,{withCredentials:true})
+      // .then((res)=>{
+      //   alert(res.data);
+      // }).catch((err)=>alert(err));
 
+      //client.publish로 바꿔야함
     }
     return (
         <PanelWrapper className={isClosing ? "slideOut" : "slideIn"}>
@@ -83,7 +88,7 @@ function AddPanel({ onClose, isClosing }) {
                 )
               })
             }
-            <button onClick={()=>{alert(checkedList)}}>확인</button>
+            <button onClick={()=>{handleCreateChatRoom()}}>확인</button>
             </>}
         </PanelWrapper>
     );

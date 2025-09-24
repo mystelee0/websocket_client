@@ -19,7 +19,7 @@ function ChatInput({client}) {
         else {
             //메시지 형식
             let body = {
-                'messageType':1, //1=토픽(broadcast) 2=유저(queue) 시스템
+                'messageType':2, //1=토픽(broadcast) 2=유저(queue) 시스템
                 'roomId': 101,
                 'sender': userInfo,
                 'message': input,
@@ -28,7 +28,7 @@ function ChatInput({client}) {
             //메시지 보내기
 
             client.publish({
-                destination: "/topic/101",
+                destination: "/app/greetings",
                 body: JSON.stringify(body),
             })
             setInput('');

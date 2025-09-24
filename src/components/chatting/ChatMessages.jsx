@@ -9,7 +9,7 @@ function ChatMessages() {
 
     const params = useParams()
 
-    let messages = useSelector((state) => state.chat.find(ob => ob.roomId === parseInt(params.id)))
+    let messages = useSelector((state) => state.chat.find(ob => ob.roomId === params.id))
     let userInfo = useSelector((state) => state.userInfo);
     console.log("지금 채팅메시지 유저 명", userInfo.mobNum);
 
@@ -52,8 +52,8 @@ function ChatMessages() {
                         <MyMessage >{msg.message}</MyMessage>
                     </RightContainer>
                 )
-            // 1.2 상대방 메시지 시작 (이전 메시지가 있는데, 보낸 사람이 다른 경우 || 같은 사용자지만 시간이 다른경우)
-            else if ( (prev && prev.sender.mobNum !== msg.sender.mobNum) || prevHm!==msgHm)
+            // 1.2 상대방 메시지 시작 (첫 메시지 || 이전 메시지가 있는데, 보낸 사람이 다른 경우 || 같은 사용자지만 시간이 다른경우)
+            else if ( (!prev || prev && prev.sender.mobNum !== msg.sender.mobNum) || prevHm!==msgHm)
                 // 프로필 이미지, 닉네임, 메시지 같이 출력
                 return (
                     <LeftContainer key={index}>
