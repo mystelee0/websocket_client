@@ -95,6 +95,7 @@ function AddPanel({ onClose, isClosing }) {
               chatPathRegex.test(location.pathname) &&
               <>
                 <div>💬 ~채팅방이름 </div>
+                <button>방에서 나가기</button>
               </>
             }
         </PanelWrapper>
