@@ -2,11 +2,11 @@
 import styled from "styled-components";
 import { useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
-import FriendAddForm from "./FriendAddForm";
+import FriendAddForm from "../friends/FriendAddForm";
 import axios from "axios";
 import ListItem from "./ListItem";
 import { useDispatch, useSelector } from "react-redux";
-import { addFriendInfo } from "../redux/friendInfoSlice";
+import { addFriendInfo } from "../../redux/friendInfoSlice";
 
 const SERVER_IP = import.meta.env.VITE_SERVER_IP;
 
@@ -49,13 +49,14 @@ function AddPanel({ onClose, isClosing }) {
       }
     }
     function handleCreateChatRoom(){
-      // axios.post(`${SERVER_IP}/chats/${1234}`,checkedList,{withCredentials:true})
-      // .then((res)=>{
-      //   alert(res.data);
-      // }).catch((err)=>alert(err));
+      alert(checkedList);
 
-      //client.publish로 바꿔야함
+      // 시스템에 방만들기 요청보내야함
     }
+
+    // chat/{id} 정규식
+    const chatPathRegex = /^\/chats\/.+$/;
+
     return (
         <PanelWrapper className={isClosing ? "slideOut" : "slideIn"}>
             <CloseBtn onClick={() => onClose(false)}>X</CloseBtn>
@@ -83,13 +84,19 @@ function AddPanel({ onClose, isClosing }) {
                 return (
                   <div key={index}>
                 <span>{value.nickName}</span>
-                <input id={value.mobNum} type="checkbox" onChange={(e)=>handleCheck(e)}></input>
+                <input id={value.mobNum} type="checkbox" onChange={handleCheck}></input>
                   </div>
                 )
               })
             }
             <button onClick={()=>{handleCreateChatRoom()}}>확인</button>
             </>}
+            {
+              chatPathRegex.test(location.pathname) &&
+              <>
+                <div>💬 ~채팅방이름 </div>
+              </>
+            }
         </PanelWrapper>
     );
 }

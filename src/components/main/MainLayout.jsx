@@ -1,9 +1,9 @@
 import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { useCheckUser } from "../useSetUser";
+import { useCheckUser } from "../../useSetUser";
 import { useEffect, useState } from "react";
-import AddPanel from "./AddPanel";
-import { useWebsocket } from "../useWebsocket";
+import AddPanel from "../common/AddPanel";
+import { useWebsocket } from "../../useWebsocket";
 import Footer from "./Footer";
 
 function MainLayout() {

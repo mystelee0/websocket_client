@@ -2,23 +2,16 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
-function ChatHeader({menuOpen,setMenuOpen}) {
+function ChatHeader({handlePlus}) {
 
   const navigate = useNavigate();
-
-    function toggleMenu(e){
-        setMenuOpen(!menuOpen);
-        e.stopPropagation();
-    }
-
-  
 
   return (
     <>
     <Header>
       <BackButton onClick={()=>navigate("/chats")}>←</BackButton>
       <Title>채팅방</Title>
-      <Hamburger onClick={(e)=>toggleMenu(e)}>☰</Hamburger>
+      <Hamburger onClick={handlePlus}>☰</Hamburger>
     </Header>
     </>
   );

@@ -9,6 +9,7 @@ export function useWebsocket(setClient) {
     console.log("@@@@useWebsocket 호출@@@@");
     let dispatch = useDispatch();
     let storedUser = useSelector((state) => state.userInfo);
+    let subRoom = useSelector((state)=>state.subRoom);
 
     //웹소켓 연결
     useEffect(() => {
@@ -40,11 +41,12 @@ export function useWebsocket(setClient) {
             onConnect: () => {
                 // 각 유저는 자기자신의 이름으로 구독 (queue)
                 const subscribeId = client.subscribe(`/user/${storedUser.mobNum}/queue/message`, messageCallback);
-                console.log(subscribeId);
+                console.log("구독 id ",subscribeId);
 
                 //시스템이 브로드캐스트해야하는 경우(전체 공지?)를 생각해서 일단 냅둠
-                client.subscribe(`/topic/101`, messageCallback); 
-
+                const subid2 = client.subscribe(`/topic/101`, messageCallback,{id:"/topic/101"}); 
+                console.log("구독 id2", subid2);
+                
                 return () => {
                     console.log("구독취소",subscribeId);
                     subscribeId.unsubscribe();

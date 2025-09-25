@@ -4,9 +4,9 @@ import './App.css'
 import styled from 'styled-components';
 import { BrowserRouter, Link, Route, Routes } from 'react-router-dom';
 
-import Friends from './components/Friends';
-import MainLayout from './components/MainLayout';
-import ChatRooms from './components/ChatRooms';
+import Friends from './components/friends/Friends';
+import MainLayout from './components/main/MainLayout';
+import ChatRooms from './components/chatRooms/ChatRooms';
 import Login from './components/auth/Login';
 import SignUp from './components/auth/SignUp';
 import { useCheckUser } from './useSetUser';

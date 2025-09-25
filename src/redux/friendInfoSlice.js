@@ -3,11 +3,11 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState=[
     {
         mobNum:"001",
-        nickName:"테스트1"
+        nickName:"사람1"
     },
     {
         mobNum:"002",
-        nickName:"테스트2"
+        nickName:"사람2"
     },
 ];
 

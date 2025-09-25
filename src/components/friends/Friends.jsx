@@ -1,7 +1,6 @@
 import styled from "styled-components";
-import ListItem from "./ListItem";
+import ListItem from "../common/ListItem";
 import { useSelector } from "react-redux";
-import { useCheckUser } from "../useSetUser";
 
 function Friends() {
 

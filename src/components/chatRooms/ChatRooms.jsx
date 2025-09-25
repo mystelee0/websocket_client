@@ -1,6 +1,6 @@
 import styled from "styled-components";
-import chatRoomsItem from "../data/chatRooms";
-import ListItem from "./ListItem";
+import chatRoomsItem from "../../data/chatRooms";
+import ListItem from "../common/ListItem";
 import { useNavigate } from "react-router-dom";
 
 function ChatRooms() {

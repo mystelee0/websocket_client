@@ -19,7 +19,7 @@ function ChatInput({client}) {
         else {
             //메시지 형식
             let body = {
-                'messageType':2, //1=토픽(broadcast) 2=유저(queue) 시스템
+                'messageType':1, //1=토픽(broadcast) 2=유저(queue) 시스템
                 'roomId': 101,
                 'sender': userInfo,
                 'message': input,
