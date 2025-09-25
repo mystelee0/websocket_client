@@ -1,8 +1,8 @@
 // components/AddPanel.jsx
 import styled from "styled-components";
 import { useLocation } from "react-router-dom";
-import { useEffect, useState } from "react";
-import FriendAddForm from "../friends/FriendAddForm";
+import { useEffect, useRef, useState } from "react";
+import FriendSearchForm from "../friends/FriendSearchForm";
 import axios from "axios";
 import ListItem from "./ListItem";
 import { useDispatch, useSelector } from "react-redux";
@@ -26,10 +26,24 @@ function AddPanel({ onClose, isClosing }) {
         }
     }, [isClosing]);
 
+    const isFirstRender = useRef(true);
+    // 경로 변경시 초기화
+    useEffect(()=>{
+      // 첫번재 무시
+      if(isFirstRender.current){
+        isFirstRender.current = false;
+        return;
+      }
+      setFoundUser();
+      setCheckedList([]);
+      onClose(false);
+    },[location.pathname]);
+
     const handleAddFriendSubmit = (mobNum) => {
-        //친구추가 작성해야함
+        // 친구 검색 폼
         axios.get(`${SERVER_IP}/users/${mobNum}`,{withCredentials:true})
         .then((res)=>{
+          console.log("유저 검색 결과",res.data);
           setFoundUser(res.data);
         }).catch((err)=>{
           console.log(err);
@@ -39,6 +53,7 @@ function AddPanel({ onClose, isClosing }) {
     const friendList = useSelector((state)=>state.friendInfo);
     let [checkedList,setCheckedList] = useState([]);
     
+    // 체크박스 선택,해제 시 checkedList 수정 
     function handleCheck(e){
       if(e.target.checked){
         console.log("체크",e.target.id);
@@ -48,10 +63,18 @@ function AddPanel({ onClose, isClosing }) {
         setCheckedList(prev => prev.filter(el=>el!==e.target.id));
       }
     }
+
+    // 친구추가 버튼
+    function handleAddFriend(){
+      alert(JSON.stringify(foundUser));
+      dispatch(addFriendInfo(foundUser));
+      onClose(false);
+    }
+    // 채팅방 생성 버튼
     function handleCreateChatRoom(){
       alert(checkedList);
-
-      // 시스템에 방만들기 요청보내야함
+      // 시스템에 방만들기 요청 전송, 보낸후 받은 경로로 구독 및 subRoom에 추가
+      onClose(false);
     }
 
     // chat/{id} 정규식
@@ -63,27 +86,26 @@ function AddPanel({ onClose, isClosing }) {
             {location.pathname === "/users" &&
                 <>
                     <div>👥 친구 추가 폼</div>
-                    <FriendAddForm onSubmit={handleAddFriendSubmit} />
+                    <FriendSearchForm onSubmit={handleAddFriendSubmit} />
                     {
                       foundUser?
                       <>
-                      <ListItem type={1} contents={foundUser}/>
-                      <button onClick={()=>{
-                        dispatch(addFriendInfo(foundUser));
-                      }}>친구 추가</button>
+                      <ListItem type={1} contents={foundUser} />
+                      <button onClick={handleAddFriend}>친구 추가</button>
                       </>
                       :null
                     }
                 </>}
+
             {location.pathname === "/chats" && 
             <>
             <div>💬 채팅방 생성 폼</div>
-            <FriendAddForm onSubmit={handleAddFriendSubmit} />
             {
               friendList.map((value,index)=>{
                 return (
                   <div key={index}>
-                <span>{value.nickName}</span>
+                    <ListItem type={1} contents={value}/>
+                
                 <input id={value.mobNum} type="checkbox" onChange={handleCheck}></input>
                   </div>
                 )

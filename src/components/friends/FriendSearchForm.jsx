@@ -1,7 +1,7 @@
 import { useState } from "react";
 import styled from "styled-components";
 
-function FriendAddForm({ onSubmit }) {
+function FriendSearchForm({ onSubmit }) {
   const [mobNum, setMobNum] = useState("");
 
   const handleSubmit = (e) => {
@@ -64,4 +64,4 @@ const AddButton = styled.button`
   }
 `;
 
-export default FriendAddForm;
+export default FriendSearchForm;

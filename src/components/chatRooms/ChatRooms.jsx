@@ -4,13 +4,15 @@ import ListItem from "../common/ListItem";
 import { useNavigate } from "react-router-dom";
 
 function ChatRooms() {
-
-    
+    const navigate = useNavigate();
+    function handleOnClick(roomId){
+        navigate(`/chats/${roomId}`);
+    }
     return ( 
         <ChatRoomsWrapper>
             {
                 chatRoomsItem.map((roomInfo) =>
-                    <ListItem type={roomInfo.count} key={roomInfo.id} contents={roomInfo}/> 
+                    <ListItem type={roomInfo.count} key={roomInfo.id} contents={roomInfo} handleOnClick={()=>handleOnClick(roomInfo.id)}/> 
                 )
             }
         </ChatRoomsWrapper>
